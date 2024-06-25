@@ -5,7 +5,7 @@ export const getPersonalAPI = async () => {
   return response;
 };
 export const changeInforAPI = async (data) => {
-  const response = await putData("/member/updateMemberName", data);
+  const response = await putData("/accounts/updateMemberName", data);
   console.log("response", response);
   return response;
 };

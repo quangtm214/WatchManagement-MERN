@@ -14,11 +14,9 @@ export default function HeaderLayout() {
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const logouthander = async () => {
+    navigate("/");
     const result = await logout();
     console.log("userlogout", result);
-    if (!result) {
-      navigate("/");
-    }
   };
 
   const itemsAdmin = [

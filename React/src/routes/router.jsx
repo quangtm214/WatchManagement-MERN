@@ -8,6 +8,8 @@ import Personal from "../pages/personal";
 import WatchManagement from "../pages/manageWatch.jsx";
 import BrandManagement from "../pages/manageBrand.jsx/index.jsx";
 import UserManagement from "../pages/managerMember/index.jsx";
+import ProtectedRoute from "../utils/authRoute/authRoute.jsx";
+import NoAccess from "../pages/noAccess/index.jsx";
 
 function Routing() {
   return (
@@ -16,13 +18,35 @@ function Routing() {
         <Route index element={<Home />} />
         <Route path="/watch/:watchId" element={<WatchDetail />} />
         <Route path="/personal" element={<Personal />} />
-        <Route path="/WatchManagement" element={<WatchManagement />} />
-        <Route path="/BrandManagement" element={<BrandManagement />} />
-        <Route path="/UserManagement" element={<UserManagement />} />
+        <Route
+          path="/WatchManagement"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <WatchManagement />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/BrandManagement"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <BrandManagement />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/UserManagement"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <UserManagement />
+            </ProtectedRoute>
+          }
+        />
         <Route path="" />
       </Route>
       <Route path="/login" element={<Login />} />{" "}
       <Route path="/signup" element={<SignUp />} />
+      <Route path="/no-access" element={<NoAccess />} />
       {/* 
       
      

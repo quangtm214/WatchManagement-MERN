@@ -19,7 +19,7 @@ class memberService {
     members = members.map((member) => {
       return {
         membername: member.membername,
-        role: member.role,
+        isAdmin: member.isAdmin,
         id: member._id,
       };
     });

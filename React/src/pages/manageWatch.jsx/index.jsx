@@ -8,6 +8,8 @@ import {
   Checkbox,
   Select,
   Typography,
+  Dropdown,
+  Menu,
 } from "antd";
 import {
   addWatchAPI,
@@ -15,6 +17,7 @@ import {
   getWatchAPI,
   updateWatchAPI,
 } from "../../service/watchAPI/watchAPI";
+import { CiMenuKebab } from "react-icons/ci";
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -153,12 +156,33 @@ const WatchManagement = () => {
       key: "action",
       render: (_, record) => (
         <>
-          <Button type="primary" onClick={() => showModal("edit", record)}>
-            Edit
-          </Button>{" "}
-          <Button type="danger" onClick={() => showModal("delete", record)}>
-            Delete
-          </Button>
+          {/* <Dropdown overlay={menu}>
+            <Button type="primary" onClick={() => showModal("edit", record)}>
+              Edit
+            </Button>{" "}
+            <Button type="danger" onClick={() => showModal("delete", record)}>
+              Delete
+            </Button>
+          </Dropdown> */}
+
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item key="1" onClick={() => showModal("edit", record)}>
+                  Edit
+                </Menu.Item>
+                <Menu.Item key="2" onClick={() => showModal("delete", record)}>
+                  Delete
+                </Menu.Item>
+              </Menu>
+            }
+            placement="bottomLeft"
+            arrow={{
+              pointAtCenter: true,
+            }}
+          >
+            <Button type="text" icon={<CiMenuKebab />} />
+          </Dropdown>
         </>
       ),
     },

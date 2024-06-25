@@ -6,7 +6,7 @@ memberRoute
   .route("/updateMemberName")
   .put(authController.protect, memberController.updateMember);
 memberRoute
-  .route("/getAllMember")
+  .route("/")
   .get(
     authController.protect,
     authController.restricAdmin,

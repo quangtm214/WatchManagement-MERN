@@ -38,7 +38,7 @@ app.use("/", indexRouter);
 app.use("/auth", authRoute);
 app.use("/brands", brandRoute);
 app.use("/watchs", watchRoute);
-app.use("/member", memberRoute);
+app.use("/accounts", memberRoute);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

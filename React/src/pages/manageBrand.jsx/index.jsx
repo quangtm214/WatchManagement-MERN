@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Table, Button, Modal, Form, Input, Typography, message } from "antd";
+import {
+  Table,
+  Button,
+  Modal,
+  Form,
+  Input,
+  Typography,
+  message,
+  Dropdown,
+  Menu,
+} from "antd";
 import {
   addBrandAPI,
   deleteBrandAPI,
   getBrandAPI,
   updateBrandAPI,
 } from "../../service/brandAPI/brandAPI";
+import { CiMenuKebab } from "react-icons/ci";
 
 const { Title } = Typography;
 
@@ -116,12 +127,30 @@ const BrandManagement = () => {
       key: "action",
       render: (_, record) => (
         <>
-          <Button type="primary" onClick={() => showModal("edit", record)}>
+          {/* <Button type="primary" onClick={() => showModal("edit", record)}>
             Edit
           </Button>{" "}
           <Button type="danger" onClick={() => showModal("delete", record)}>
             Delete
-          </Button>
+          </Button> */}
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item key="1" onClick={() => showModal("edit", record)}>
+                  Edit
+                </Menu.Item>
+                <Menu.Item key="2" onClick={() => showModal("delete", record)}>
+                  Delete
+                </Menu.Item>
+              </Menu>
+            }
+            placement="bottomLeft"
+            arrow={{
+              pointAtCenter: true,
+            }}
+          >
+            <Button type="text" icon={<CiMenuKebab />} />
+          </Dropdown>
         </>
       ),
     },

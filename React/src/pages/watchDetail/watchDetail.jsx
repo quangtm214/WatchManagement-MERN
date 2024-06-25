@@ -54,10 +54,10 @@ export default function WatchDetail() {
   return (
     <>
       <Row gutter={[16, 16]}>
-        <Col xs={24} md={12}>
+        <Col xs={24} sm={5}>
           <Card
             style={{
-              width: 240,
+              width: "100%", // Make the card width responsive
             }}
             cover={
               <img alt={watch.watchName || "Watch image"} src={watch.image} />
@@ -70,7 +70,10 @@ export default function WatchDetail() {
             <p>{formatPrice(watch.price)}</p>
           </Card>
         </Col>
-        <Col xs={24} md={12}>
+        <Col xs={24} sm={16}>
+          <p>{watch.watchDescription}</p>
+        </Col>
+        <Col xs={24} sm={24}>
           <Comment ListComments={watch.comments} watchId={watch._id} />
         </Col>
       </Row>
