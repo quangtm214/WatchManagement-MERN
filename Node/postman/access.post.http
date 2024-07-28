@@ -1,0 +1,10 @@
+@url_dev=http://localhost:3000
+### signup
+
+POST {{url_dev}}/accessrouter/signup
+Content-Type: application/json
+
+{
+    "membername": "test5",
+    "password": "test"
+}

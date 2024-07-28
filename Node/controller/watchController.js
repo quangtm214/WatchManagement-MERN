@@ -2,6 +2,25 @@ const brandService = require("../service/brandService");
 const watchService = require("../service/watchesService");
 
 class watchController {
+  static async getWatchInHome(req, res) {
+    const filteredQuery = Object.fromEntries(
+      Object.entries(req.query).filter(
+        ([key, value]) => value !== "" && value !== undefined
+      )
+    );
+    console.log("reqQuery", req.query);
+    console.log("filteredQuery", filteredQuery);
+    const result = await watchService.getListWatch(filteredQuery);
+    const brands = await brandService.getBrand();
+    res.status(200).json({
+      status: "success",
+      data: {
+        title: "WatchesHome",
+        watches: result,
+        brands: brands,
+      },
+    });
+  }
   static async getListWatch(req, res, next) {
     try {
       const result = await watchService.getListWatch();
