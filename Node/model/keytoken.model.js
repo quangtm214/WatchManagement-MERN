@@ -11,6 +11,10 @@ var keyTokenSchema = new mongoose.Schema(
       required: true,
       ref: "Members",
     },
+    privateKey: {
+      type: String,
+      required: true,
+    },
     publicKey: {
       type: String,
       required: true,

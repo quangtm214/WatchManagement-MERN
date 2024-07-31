@@ -39,9 +39,24 @@ app.use("/brands", brandRoute);
 app.use("/watchs", watchRoute);
 app.use("/accounts", memberRoute);
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
+app.use((res, req, next) => {
+  const error = new Error("Not found");
+  error.status = 404;
+  next(error);
 });
+
+app.use((error, req, res, next) => {
+  const statusCode = error.status || 500;
+  return res.status(statusCode).json({
+    status: "error",
+    code: statusCode,
+    message: error.message || "Internal Server Error",
+  });
+});
+
+// app.use(function (req, res, next) {
+//   next(createError(404));
+// });
 
 // error handler
 app.use((err, req, res, next) => {
