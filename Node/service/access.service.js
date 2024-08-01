@@ -6,10 +6,51 @@ const { use } = require("passport");
 const { createTokenPair } = require("../auth/auth.Utils");
 const { getInfodata } = require("../utils");
 const { BadRequestError } = require("../core/error.response");
+const { findbyName } = require("./member.service");
 class AccessService {
-  static signUp = async (membername, password) => {
-    // try {
+  static logout = async (keyStore) => {
+    console.log("keyStore", keyStore);
+    const delKey = await KeyTokenService.removeKeyById(keyStore._id);
+    console.log("delKey", delKey);
+    return delKey;
+  };
 
+  static login = async ({ membername, password, refreshToken = null }) => {
+    const foundMember = await findbyName({ membername });
+    if (!foundMember) {
+      throw new BadRequestError("Error: Member not found");
+    }
+
+    const match = await bcrypt.compare(password, foundMember.password);
+    if (!match) {
+      throw new AuthFailureError("authentication failed");
+    }
+
+    const privateKey = crypto.randomBytes(64).toString("hex");
+    const publicKey = crypto.randomBytes(64).toString("hex");
+
+    const tokens = await createTokenPair(
+      { userId: foundMember._id, membername },
+      publicKey,
+      privateKey
+    );
+    console.log("tokens", tokens);
+    await KeyTokenService.createKeyToken(
+      foundMember._id,
+      publicKey,
+      privateKey,
+      tokens.refreshtoken
+    );
+    return {
+      member: getInfodata({
+        field: ["_id", "membername"],
+        object: foundMember,
+      }),
+      tokens,
+    };
+  };
+
+  static signUp = async (membername, password) => {
     console.log("membername", membername);
     console.log("password", password);
     const hoderMember = await Member.findOne({
@@ -74,13 +115,6 @@ class AccessService {
       code: "xxx",
       message: "Member not created",
     };
-    // } catch (error) {
-    //   return {
-    //     code: "xxx",
-    //     message: error.stack,
-    //     status: "error",
-    //   };
-    // }
   };
 }
 

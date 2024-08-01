@@ -8,6 +8,8 @@ const ReasonStatusCode = {
   FORBIDDEN: "Bad request error",
 };
 
+const ReasonPhrase = require("./../utils/reasonPhrases");
+const StatusCodes = require("./../utils/statusCodes");
 class ErrorResponse extends Error {
   constructor(message, status) {
     super(message);
@@ -33,4 +35,26 @@ class BadRequestError extends ErrorResponse {
   }
 }
 
-module.exports = { ConflictRequestError, BadRequestError };
+class AuthFailureError extends ErrorResponse {
+  constructor(
+    message = ReasonPhrase.UNAUTHORIZED,
+    statusCode = StatusCodes.UNAUTHORIZED
+  ) {
+    super(message, statusCode);
+  }
+}
+class NotFoundError extends ErrorResponse {
+  constructor(
+    message = ReasonPhrase.NOT_FOUND,
+    statusCode = StatusCodes.NOT_FOUND
+  ) {
+    super(message, statusCode);
+  }
+}
+
+module.exports = {
+  ConflictRequestError,
+  BadRequestError,
+  AuthFailureError,
+  NotFoundError,
+};

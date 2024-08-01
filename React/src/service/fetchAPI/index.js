@@ -46,7 +46,10 @@ export const postData = async (url, data) => {
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          authorization: token,
+          "x-client-id": Cookies.get("client-id"),
+          "x-api-key":
+            "7349e0bd1f36591ff9da51a1d0d8b4c8e69efacdee31b7d666544e03b2a34c3c6769bdbdb41d00f4626090a7f02313bfbd053a351556bb5109831d76f5efdbd7",
         },
       }
     );

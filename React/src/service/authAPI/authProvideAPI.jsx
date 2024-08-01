@@ -20,17 +20,19 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (name, password) => {
-    const response = await postData("/auth/login", {
+    const response = await postData("/accessrouter/login", {
       membername: name,
       password: password,
     });
     console.log("response", response);
     if (response && response.data) {
-      const token = response.data.data.token;
+      const token = response.data.metadata.tokens.accesstoken;
       console.log(token);
       if (token) {
         Cookies.set("jwt", token, { expires: 60 });
         const decodedToken = jwtDecode(token);
+        console.log("decodedToken", decodedToken);
+        Cookies.set("client-id", decodedToken.userId, { expires: 60 });
         setUser(decodedToken);
         return decodedToken;
       }
@@ -63,6 +65,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
+    const response = await postData("/accessrouter/logout", {});
     await setIsLoading(true);
     await new Promise((resolve) => {
       setUser(null);
